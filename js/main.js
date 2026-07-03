@@ -18,6 +18,10 @@ const state = {
 const viewer = new MapViewer($('map-canvas'), $('tooltip'));
 const graph = new GraphView($('graph-canvas'), $('tooltip'));
 
+// Teleport-hub planes connect to half the world; the world web hides
+// routes through them unless "Portals" is toggled on.
+const HUBS = new Set(['poknowledge', 'potranquility']);
+
 // ---------- data loading ----------
 
 async function loadIndex() {
@@ -35,7 +39,7 @@ async function loadIndex() {
       state.adjacency.get(l.t).add(short);
     }
   }
-  graph.setWorld(state.adjacency, state.names);
+  graph.setWorld(state.adjacency, state.names, HUBS);
 }
 
 async function loadZone(short) {
@@ -189,7 +193,7 @@ function renderZoneControls(zone) {
   chips.innerHTML = '';
   for (const layer of zone.layers) {
     const b = document.createElement('button');
-    b.className = 'chip active';
+    b.className = viewer.visibleLayers.has(layer.n) ? 'chip active' : 'chip';
     b.textContent = layer.n === 0 ? 'Base' : `Detail ${layer.n}`;
     b.addEventListener('click', () => {
       const on = !b.classList.contains('active');
@@ -332,6 +336,11 @@ async function boot() {
     $('z-min').value = zmin;
     $('z-max').value = zmax;
     applyElev();
+  });
+  $('hub-toggle').addEventListener('click', () => {
+    graph.hideHubRoutes = !graph.hideHubRoutes;
+    $('hub-toggle').classList.toggle('active', !graph.hideHubRoutes);
+    graph.build(state.current, graph.depth);
   });
   for (const btn of document.querySelectorAll('#web-controls button[data-d]')) {
     btn.addEventListener('click', () => {

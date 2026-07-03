@@ -45,25 +45,31 @@ export class GraphView {
     this.requestRender();
   }
 
-  setWorld(adjacency, names) {
+  setWorld(adjacency, names, hubs = new Set()) {
     this.adjacency = adjacency;
     this.names = names;
+    this.hubs = hubs;
+    this.hideHubRoutes = true;
   }
 
   build(center, depth = this.depth) {
     this.center = center;
     this.depth = depth;
 
-    // BFS neighborhood.
+    // BFS neighborhood. With hub routes hidden, planar hubs (PoK, Tranquility)
+    // may appear but are never traversed *through* — except as the center.
+    const blocked = (id) => this.hideHubRoutes && id !== center && this.hubs.has(id);
     const depthOf = new Map([[center, 0]]);
+    const parentOf = new Map();
     const order = [center];
     for (let i = 0; i < order.length; i++) {
       const cur = order[i];
       const d = depthOf.get(cur);
-      if (d >= depth) continue;
+      if (d >= depth || blocked(cur)) continue;
       for (const nb of this.adjacency.get(cur) || []) {
         if (!depthOf.has(nb)) {
           depthOf.set(nb, d + 1);
+          parentOf.set(nb, cur);
           order.push(nb);
         }
       }
@@ -95,7 +101,12 @@ export class GraphView {
     for (const [a, i] of idx) {
       for (const b of this.adjacency.get(a) || []) {
         const j = idx.get(b);
-        if (j !== undefined && i < j) this.edges.push([i, j]);
+        if (j === undefined || i >= j) continue;
+        // With hub routes hidden, a non-center hub keeps only the edge it
+        // was discovered through — no 40-spoke portal star.
+        if (blocked(a) && parentOf.get(a) !== b) continue;
+        if (blocked(b) && parentOf.get(b) !== a) continue;
+        this.edges.push([i, j]);
       }
     }
     for (const [i, j] of this.edges) {
@@ -189,7 +200,8 @@ export class GraphView {
       if (i !== null) {
         const node = this.nodes[i];
         const [x, y] = this.camera.toScreen(node.x, node.y);
-        this.tooltip.innerHTML = `Open the map of <b>${node.name}</b><small>${node.deg} passage${node.deg === 1 ? '' : 's'} · ${node.depth} hop${node.depth === 1 ? '' : 's'} away</small>`;
+        const hub = this.hubs.has(node.id) ? 'planar hub · ' : '';
+        this.tooltip.innerHTML = `Open the map of <b>${node.name}</b><small>${hub}${node.deg} passage${node.deg === 1 ? '' : 's'} · ${node.depth} hop${node.depth === 1 ? '' : 's'} away</small>`;
         this.tooltip.style.left = `${x}px`;
         this.tooltip.style.top = `${y - 18}px`;
         this.tooltip.hidden = false;
@@ -284,6 +296,7 @@ export class GraphView {
       const [x, y] = cam.toScreen(node.x, node.y);
       if (x < -160 || y < -40 || x > w + 160 || y > h + 40) continue;
       const isCenter = node.depth === 0;
+      const isHub = !isCenter && this.hubs.has(node.id);
       const hot = i === this.hovered || hotSet.has(i);
       const cw = this._chipW(node, ctx);
       const ch = isCenter ? 32 : 24;
@@ -295,6 +308,9 @@ export class GraphView {
         g.addColorStop(0, '#e2b466');
         g.addColorStop(1, '#9c6f24');
         ctx.fillStyle = g;
+      } else if (isHub) {
+        // planar hubs glow otherworldly blue amid the brass
+        ctx.fillStyle = hot ? '#2c3d52' : '#22303f';
       } else {
         ctx.fillStyle = hot ? '#33270f' : '#241c11';
       }
@@ -307,16 +323,18 @@ export class GraphView {
       ctx.shadowOffsetY = 0;
       ctx.strokeStyle = isCenter
         ? '#f4d79b'
-        : hot
-          ? 'rgba(238,194,114,0.95)'
-          : 'rgba(201,151,59,0.4)';
+        : isHub
+          ? hot ? '#b4d4f2' : 'rgba(126,166,206,0.65)'
+          : hot
+            ? 'rgba(238,194,114,0.95)'
+            : 'rgba(201,151,59,0.4)';
       ctx.lineWidth = isCenter ? 1.6 : 1;
       ctx.stroke();
 
       ctx.font = isCenter ? '700 13px "Cinzel", serif' : '500 11.5px "Alegreya Sans", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillStyle = isCenter ? '#241605' : hot ? '#f4e2b8' : PARCH;
+      ctx.fillStyle = isCenter ? '#241605' : isHub ? (hot ? '#e2eefa' : '#c4d8ea') : hot ? '#f4e2b8' : PARCH;
       ctx.fillText(node.name, x, y + 0.5);
     }
 

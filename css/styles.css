@@ -287,6 +287,20 @@ main { flex: 1; display: flex; min-height: 0; }
   color: var(--muted);
   margin-right: 2px;
 }
+#web-controls .wc-wide {
+  width: auto;
+  padding: 0 13px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-right: 10px;
+  color: var(--muted);
+}
+#web-controls .wc-wide.active {
+  color: #c4d8ea;
+  border-color: rgba(126, 166, 206, 0.65);
+  background: linear-gradient(180deg, #2c3d52, #22303f);
+}
 #web-controls button.active {
   border-color: var(--brass);
   color: var(--parch);

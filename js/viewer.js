@@ -73,7 +73,8 @@ export class MapViewer {
 
   setZone(zone, entryFrom) {
     this.zone = zone;
-    this.visibleLayers = new Set(zone.layers.map((l) => l.n));
+    // Detail 2+ layers are noisy (quest notes, hunt marks) — off by default.
+    this.visibleLayers = new Set(zone.layers.map((l) => l.n).filter((n) => n < 2));
     this.zRange = null;
     this.hovered = null;
     this.spot = null;
