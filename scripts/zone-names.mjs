@@ -71,7 +71,7 @@ export const ZONE_NAMES = {
   najena: 'Najena',
   soldunga: "Solusek's Eye",
   soldungb: "Nagafen's Lair",
-  soldungc: "Nagafen's Lair (Alternate)",
+  soldungc: 'The Caverns of Exile',
   soltemple: 'Temple of Solusek Ro',
   solrotower: 'Tower of Solusek Ro',
   befallen: 'Befallen',
@@ -596,6 +596,7 @@ export const ALIASES = {
   theaterofeternity: 'toe',
   castleofmistmoore: 'mistmoore',
   nekulosforest: 'nektulos', // map-file typo
+  cavernsofexcile: 'soldungc', // map-file typo
   feerott: 'feerrott', // map-file typo
   fortressmechantos: 'mechanotus', // map-file typo
   ruinsofshadowhaven: 'shadowhaventwo',

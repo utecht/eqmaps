@@ -1508,24 +1508,10 @@
       ]
     },
     {
-      "label": "to_The_Caverns_of_Exile",
-      "count": 1,
-      "zones": [
-        "soldunga"
-      ]
-    },
-    {
       "label": "to_Nagafen`s_Lair_(5)_One-Way",
       "count": 1,
       "zones": [
         "soldunga"
-      ]
-    },
-    {
-      "label": "to_The_Caverns_of_Excile",
-      "count": 1,
-      "zones": [
-        "soldungb"
       ]
     },
     {

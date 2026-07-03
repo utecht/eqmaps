@@ -269,13 +269,18 @@ export class MapViewer {
     // --- point labels (screen space for crisp text) ---
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const ratio = cam.k / cam.fitK;
-    const linkSpots = new Set(this.zone.links.map((l) => `${Math.round(l.x)},${Math.round(l.y)}`));
+    // a "to_" label is already drawn as a travel marker if a link sits nearby
+    const nearLink = (pt) => this.zone.links.some((l) => {
+      const dx = l.x - pt.x;
+      const dy = l.y - pt.y;
+      return dx * dx + dy * dy < 16;
+    });
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     for (const layer of this.zone.layers) {
       if (!this.visibleLayers.has(layer.n)) continue;
       for (const pt of layer.points) {
-        if (pt.isLink && linkSpots.has(`${Math.round(pt.x)},${Math.round(pt.y)}`)) continue;
+        if (pt.isLink && nearLink(pt)) continue;
         if (this.zRange && !this._inZ(pt.z, pt.z)) continue;
         const need = pt.size >= 3 ? 0 : pt.size === 2 ? 1.5 : 2.8;
         if (ratio < need) continue;
