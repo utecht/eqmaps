@@ -83,6 +83,7 @@ export class GraphView {
       h: bh * scale,
       cx: (minX + maxX) / 2,
       cy: (minY + maxY) / 2,
+      wings: meta.wings || 1,
       deg: 0,
     };
   }
@@ -318,7 +319,8 @@ export class GraphView {
         const node = this.nodes[i];
         const [x, y] = this.camera.toScreen(node.x, node.y);
         const hub = this.hubs.has(node.id) ? 'planar hub · ' : '';
-        this.tooltip.innerHTML = `Open the map of <b>${node.name}</b><small>${hub}${node.deg} passage${node.deg === 1 ? '' : 's'} · ${node.depth} hop${node.depth === 1 ? '' : 's'} away</small>`;
+        const wings = node.wings > 1 ? `${node.wings} charted levels · ` : '';
+        this.tooltip.innerHTML = `Open the map of <b>${node.name}</b><small>${hub}${wings}${node.deg} passage${node.deg === 1 ? '' : 's'} · ${node.depth} hop${node.depth === 1 ? '' : 's'} away</small>`;
         this.tooltip.style.left = `${x}px`;
         this.tooltip.style.top = `${y - (node.h / 2) * this.camera.k - 8}px`;
         this.tooltip.hidden = false;
@@ -420,6 +422,19 @@ export class GraphView {
       const isHub = !isCenter && this.hubs.has(node.id);
       const hot = i === this.hovered || hotSet.has(i);
 
+      // wing families read as a stacked deck of maps
+      if (node.wings > 1) {
+        for (let s = 2; s >= 1; s--) {
+          ctx.beginPath();
+          ctx.roundRect(x - cw / 2 - 5 + s * 4, y - ch / 2 - 5 + s * 4, cw + 10, ch + 10, 4);
+          ctx.fillStyle = 'rgba(20,14,8,0.9)';
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(201,151,59,0.18)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+
       // card
       ctx.beginPath();
       ctx.roundRect(x - cw / 2 - 5, y - ch / 2 - 5, cw + 10, ch + 10, 4);
@@ -454,7 +469,7 @@ export class GraphView {
       ctx.font = isCenter ? `700 ${fs}px "Cinzel", serif` : `500 ${fs}px "Alegreya Sans", sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      const label = node.name;
+      const label = node.wings > 1 ? `${node.name} · ${node.wings} levels` : node.name;
       const tw = ctx.measureText(label).width;
       const ly = y + ch / 2 + 13;
       ctx.fillStyle = 'rgba(16,11,6,0.82)';

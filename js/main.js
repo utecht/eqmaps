@@ -30,19 +30,59 @@ const HUBS = new Set(['poknowledge', 'potranquility', 'timorous']);
 async function loadIndex() {
   const res = await fetch('data/zones.json');
   state.data = await res.json();
-  for (const [short, z] of Object.entries(state.data.zones)) {
+  const zones = state.data.zones;
+  for (const [short, z] of Object.entries(zones)) {
     state.names.set(short, z.name);
   }
-  for (const [short, z] of Object.entries(state.data.zones)) {
+
+  // The world web collapses wing families (instanced multi-level dungeons
+  // like the Mistmoore Catacombs) into one node fronted by their first
+  // member; the zone-map view keeps every wing as a real zone.
+  state.famRep = new Map();
+  for (const fam of state.data.families || []) {
+    for (const m of fam.members) state.famRep.set(m, fam.members[0]);
+  }
+  const rep = (s) => state.famRep.get(s) || s;
+  state.rep = rep;
+
+  const webMeta = {};
+  const webNames = new Map(state.names);
+  for (const fam of state.data.families || []) {
+    const repId = fam.members[0];
+    const repZone = zones[repId];
+    const [minX, minY, maxX, maxY] = repZone.bounds;
+    const cx = Math.round((minX + maxX) / 2);
+    const cy = Math.round((minY + maxY) / 2);
+    const links = [];
+    const seen = new Set();
+    for (const m of fam.members) {
+      for (const l of zones[m].links) {
+        const t = rep(l.t);
+        if (t === repId || !zones[l.t] || seen.has(t)) continue;
+        seen.add(t);
+        // sibling wings' door coordinates live in their own map space —
+        // fall back to the card center for those
+        links.push(m === repId ? { ...l, t } : { ...l, t, x: cx, y: cy });
+      }
+    }
+    webMeta[repId] = { ...repZone, name: fam.name, wings: fam.members.length, links };
+    webNames.set(repId, fam.name);
+  }
+  for (const [short, z] of Object.entries(zones)) {
+    if (state.famRep.has(short)) continue;
+    webMeta[short] = { ...z, links: z.links.map((l) => ({ ...l, t: rep(l.t) })) };
+  }
+
+  for (const [short, z] of Object.entries(webMeta)) {
     if (!state.adjacency.has(short)) state.adjacency.set(short, new Set());
     for (const l of z.links) {
-      if (!state.data.zones[l.t]) continue;
+      if (!webMeta[l.t] || l.t === short) continue;
       state.adjacency.get(short).add(l.t);
       if (!state.adjacency.has(l.t)) state.adjacency.set(l.t, new Set());
       state.adjacency.get(l.t).add(short);
     }
   }
-  graph.setWorld(state.adjacency, state.names, HUBS, state.data.zones);
+  graph.setWorld(state.adjacency, webNames, HUBS, webMeta);
 }
 
 async function loadZone(short) {
@@ -125,7 +165,7 @@ async function route() {
 
   if (view === 'web') {
     $('zone-sub').textContent = 'the world web';
-    graph.build(short, graph.depth);
+    graph.build(state.rep(short), graph.depth);
     return;
   }
 

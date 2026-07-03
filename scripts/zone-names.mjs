@@ -135,7 +135,7 @@ export const ZONE_NAMES = {
   citymist: 'City of Mist',
   dalnir: 'Crypt of Dalnir',
   charasis: 'Howling Stones',
-  charasisb: 'Howling Stones (B)',
+  charasisb: "Sathir's Tomb",
   chardok: 'Chardok',
   chardokb: 'Chardok: Halls of Betrayal',
   nurga: 'Mines of Nurga',

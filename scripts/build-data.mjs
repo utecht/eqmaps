@@ -171,8 +171,33 @@ for (const [short, z] of [...zones.entries()].sort()) {
   };
 }
 
+// Wing families: instanced multi-level dungeons ship as sibling zones whose
+// names differ only by a wing letter — "Mistmoore Catacombs (A)".."( J)",
+// "Plane of Time A/B". The frontend collapses each family to one node in
+// the world web so ten wings don't hang off one overworld zone.
+const famBase = (name) => {
+  const m = name.match(/^(.*?)(?:\s*\(([A-J])\)|\s([A-J]))$/);
+  return m ? m[1].trim() : null;
+};
+const famGroups = new Map();
+for (const [s, z] of Object.entries(out.zones)) {
+  const b = famBase(z.name);
+  if (!b) continue;
+  if (!famGroups.has(b)) famGroups.set(b, []);
+  famGroups.get(b).push(s);
+}
+out.families = [];
+for (const [b, members] of famGroups) {
+  // a zone named exactly the base fronts its family
+  const exact = Object.entries(out.zones).find(([, z]) => z.name === b);
+  const all = exact ? [exact[0], ...members] : members;
+  if (all.length >= 2) out.families.push({ name: b, members: all });
+}
+out.families.sort((a, b) => (a.name < b.name ? -1 : 1));
+
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify(out));
+console.log(`wing families: ${out.families.length}`);
 
 const unresolvedSorted = [...unresolved.entries()]
   .map(([label, u]) => ({ label, ...u }))
