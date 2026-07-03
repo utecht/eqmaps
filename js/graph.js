@@ -1,12 +1,20 @@
-// The World Web: a force-laid-out chart of zone connections, styled as a
-// brass star chart on dark leather — the "zoom out" counterpart to the
-// parchment zone map. Click a zone chip to open its map.
+// The World Web: an atlas view that draws each zone's actual map geometry as
+// an engraved card on dark leather, placed so that connected zones sit off
+// the doors that join them. Norrath's geography is not topographically sound,
+// so a collision pass separates overlapping maps and brass strands stretch
+// between the actual door positions.
+//
+// Layout needs no map fetches — zone bounds and door coordinates live in
+// zones.json. Geometry streams in per zone and is etched once onto a cached
+// offscreen canvas.
 
 import { Camera } from './camera.js';
+import { parseMapText } from './parser.js';
 
-const BRASS = '#c9973b';
 const PARCH = '#e9dcc3';
 const MAX_NODES = 110;
+const GAP = 26; // atlas-space gap between joined door anchors
+const THUMB_MAX = 512; // offscreen thumbnail resolution cap
 
 export class GraphView {
   constructor(canvas, tooltip) {
@@ -22,6 +30,7 @@ export class GraphView {
     this.truncated = 0;
     this.onOpen = null;
     this.onExit = null;
+    this.thumbs = new Map(); // short -> {canvas} | 'loading' | 'failed'
     this._raf = 0;
 
     this.camera.attach(canvas, {
@@ -45,19 +54,52 @@ export class GraphView {
     this.requestRender();
   }
 
-  setWorld(adjacency, names, hubs = new Set()) {
+  setWorld(adjacency, names, hubs = new Set(), zonesMeta = {}) {
     this.adjacency = adjacency;
     this.names = names;
     this.hubs = hubs;
+    this.zonesMeta = zonesMeta;
     this.hideHubRoutes = true;
+  }
+
+  // Display size compresses true zone extents (sqrt) so dungeons stay legible
+  // beside the plains zones.
+  _makeNode(id, depth) {
+    const meta = this.zonesMeta[id];
+    const [minX, minY, maxX, maxY] = meta.bounds;
+    const bw = Math.max(maxX - minX, 60);
+    const bh = Math.max(maxY - minY, 60);
+    const extent = Math.max(bw, bh);
+    const size = Math.min(330, Math.max(84, Math.sqrt(extent) * 3.4));
+    const scale = size / extent;
+    return {
+      id,
+      name: this.names.get(id) || id,
+      depth,
+      x: 0,
+      y: 0,
+      scale,
+      w: bw * scale,
+      h: bh * scale,
+      cx: (minX + maxX) / 2,
+      cy: (minY + maxY) / 2,
+      deg: 0,
+    };
+  }
+
+  // Atlas-space position of the first door in `node` that leads to targetId.
+  _doorPos(node, targetId) {
+    const link = (this.zonesMeta[node.id].links || []).find((l) => l.t === targetId);
+    if (!link) return null;
+    return [node.x + (link.x - node.cx) * node.scale, node.y + (link.y - node.cy) * node.scale];
   }
 
   build(center, depth = this.depth) {
     this.center = center;
     this.depth = depth;
 
-    // BFS neighborhood. With hub routes hidden, planar hubs (PoK, Tranquility)
-    // may appear but are never traversed *through* — except as the center.
+    // BFS neighborhood. With hub routes hidden, planar hubs may appear but
+    // are never traversed *through* — except as the center.
     const blocked = (id) => this.hideHubRoutes && id !== center && this.hubs.has(id);
     const depthOf = new Map([[center, 0]]);
     const parentOf = new Map();
@@ -67,7 +109,7 @@ export class GraphView {
       const d = depthOf.get(cur);
       if (d >= depth || blocked(cur)) continue;
       for (const nb of this.adjacency.get(cur) || []) {
-        if (!depthOf.has(nb)) {
+        if (!depthOf.has(nb) && this.zonesMeta[nb]) {
           depthOf.set(nb, d + 1);
           parentOf.set(nb, cur);
           order.push(nb);
@@ -78,32 +120,46 @@ export class GraphView {
     const included = order.slice(0, MAX_NODES);
     const idx = new Map(included.map((id, i) => [id, i]));
 
-    // Ring-seeded layout, then a short force relaxation.
-    const R = 260;
-    const perRing = new Map();
-    this.nodes = included.map((id) => {
-      const d = depthOf.get(id);
-      const i = perRing.get(d) || 0;
-      perRing.set(d, i + 1);
-      return { id, name: this.names.get(id) || id, depth: d, ring: i, x: 0, y: 0, deg: 0 };
-    });
-    const ringCounts = new Map();
-    for (const n of this.nodes) ringCounts.set(n.depth, (ringCounts.get(n.depth) || 0) + 1);
-    for (const n of this.nodes) {
-      if (n.depth === 0) continue;
-      const count = ringCounts.get(n.depth);
-      const a = (n.ring / count) * Math.PI * 2 + n.depth * 0.42;
-      n.x = Math.cos(a) * R * n.depth;
-      n.y = Math.sin(a) * R * n.depth;
+    this.nodes = included.map((id) => this._makeNode(id, depthOf.get(id)));
+    const byId = new Map(this.nodes.map((n) => [n.id, n]));
+
+    // Seed positions: hang each zone off the door that leads to it, aligning
+    // the reciprocal door when the maps agree on where they meet.
+    for (const id of included) {
+      if (id === center) continue;
+      const node = byId.get(id);
+      const parent = byId.get(parentOf.get(id));
+      if (!parent) continue;
+      const door = this._doorPos(parent, id);
+      const [ax, ay] = door || [parent.x, parent.y];
+      let dx = ax - parent.x;
+      let dy = ay - parent.y;
+      const dl = Math.hypot(dx, dy);
+      if (dl < 1) {
+        const a = (idx.get(id) * 2.399) % (Math.PI * 2); // deterministic spread
+        dx = Math.cos(a);
+        dy = Math.sin(a);
+      } else {
+        dx /= dl;
+        dy /= dl;
+      }
+      const backLink = (this.zonesMeta[id].links || []).find((l) => l.t === parent.id);
+      if (backLink) {
+        node.x = ax + dx * GAP - (backLink.x - node.cx) * node.scale;
+        node.y = ay + dy * GAP - (backLink.y - node.cy) * node.scale;
+      } else {
+        node.x = ax + dx * (GAP + Math.max(node.w, node.h) / 2);
+        node.y = ay + dy * (GAP + Math.max(node.w, node.h) / 2);
+      }
     }
 
+    // Edges among included nodes; non-center hubs keep only their discovery
+    // edge so they don't become 50-spoke portal stars.
     this.edges = [];
     for (const [a, i] of idx) {
       for (const b of this.adjacency.get(a) || []) {
         const j = idx.get(b);
         if (j === undefined || i >= j) continue;
-        // With hub routes hidden, a non-center hub keeps only the edge it
-        // was discovered through — no 40-spoke portal star.
         if (blocked(a) && parentOf.get(a) !== b) continue;
         if (blocked(b) && parentOf.get(b) !== a) continue;
         this.edges.push([i, j]);
@@ -114,79 +170,140 @@ export class GraphView {
       this.nodes[j].deg++;
     }
 
-    this._relax(this.depth >= 3 ? 320 : 240, R);
+    this._relax(220);
 
     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
     for (const n of this.nodes) {
-      if (n.x < minX) minX = n.x;
-      if (n.x > maxX) maxX = n.x;
-      if (n.y < minY) minY = n.y;
-      if (n.y > maxY) maxY = n.y;
+      minX = Math.min(minX, n.x - n.w / 2);
+      maxX = Math.max(maxX, n.x + n.w / 2);
+      minY = Math.min(minY, n.y - n.h / 2);
+      maxY = Math.max(maxY, n.y + n.h / 2);
     }
     this.camera.fit(
-      [minX - 130, minY - 60, maxX + 130, maxY + 60],
+      [minX, minY - 20, maxX, maxY + 30],
       this.canvas.clientWidth || 800,
       this.canvas.clientHeight || 600,
-      0.04
+      0.03
     );
     this.hovered = null;
+
+    for (const n of this.nodes) this._ensureThumb(n.id);
     this.requestRender();
   }
 
-  _relax(iterations, R) {
+  // Door-spring + card-collision relaxation. The center map stays pinned.
+  // Springs fade out toward the end so the final iterations are pure
+  // separation — overlap-free beats door-perfect in a world that isn't
+  // topographically sound anyway.
+  _relax(iterations) {
     const n = this.nodes;
+    const PAD_X = 46;
+    const PAD_Y = 62; // extra clearance below cards for the name plates
     for (let it = 0; it < iterations; it++) {
       const t = 1 - it / iterations;
-      // pairwise repulsion
-      for (let i = 0; i < n.length; i++) {
-        for (let j = i + 1; j < n.length; j++) {
-          let dx = n[j].x - n[i].x;
-          let dy = n[j].y - n[i].y;
-          let d2 = dx * dx + dy * dy;
-          if (d2 < 1) { dx = (i - j) * 0.7; dy = 1; d2 = 2; }
-          const d = Math.sqrt(d2);
-          const f = Math.min(24, 15000 / d2) * t;
-          const fx = (dx / d) * f;
-          const fy = (dy / d) * f;
-          if (n[i].depth !== 0) { n[i].x -= fx; n[i].y -= fy; }
-          if (n[j].depth !== 0) { n[j].x += fx; n[j].y += fy; }
+      const springPhase = it < iterations * 0.65;
+
+      if (springPhase) {
+        for (const [i, j] of this.edges) {
+          const a = n[i], b = n[j];
+          const pa = this._doorPos(a, b.id) || [a.x, a.y];
+          const pb = this._doorPos(b, a.id) || [b.x, b.y];
+          let dx = pb[0] - pa[0];
+          let dy = pb[1] - pa[1];
+          const d = Math.hypot(dx, dy) || 1;
+          const f = (d - GAP) * 0.055 * t;
+          dx = (dx / d) * f;
+          dy = (dy / d) * f;
+          if (a.depth !== 0) { a.x += dx; a.y += dy; }
+          if (b.depth !== 0) { b.x -= dx; b.y -= dy; }
         }
       }
-      // springs
-      for (const [i, j] of this.edges) {
-        const dx = n[j].x - n[i].x;
-        const dy = n[j].y - n[i].y;
-        const d = Math.max(1, Math.hypot(dx, dy));
-        const f = (d - 190) * 0.012 * t;
-        const fx = (dx / d) * f;
-        const fy = (dy / d) * f;
-        if (n[i].depth !== 0) { n[i].x += fx; n[i].y += fy; }
-        if (n[j].depth !== 0) { n[j].x -= fx; n[j].y -= fy; }
-      }
-      // gentle pull toward each node's BFS ring keeps hop-distance readable
-      for (const node of n) {
-        if (node.depth === 0) continue;
-        const d = Math.max(1, Math.hypot(node.x, node.y));
-        const target = R * node.depth;
-        const f = (target - d) * 0.05 * t;
-        node.x += (node.x / d) * f;
-        node.y += (node.y / d) * f;
-      }
+
+      this._collidePass(springPhase ? 0.45 : 0.85, PAD_X, PAD_Y);
+    }
+    // Final guarantee: sweep at full strength until nothing overlaps.
+    for (let sweep = 0; sweep < 160; sweep++) {
+      if (!this._collidePass(1, PAD_X, PAD_Y)) break;
     }
   }
 
-  _chipW(node, ctx) {
-    ctx.font = node.depth === 0 ? '700 13px "Cinzel", serif' : '500 11.5px "Alegreya Sans", sans-serif';
-    return ctx.measureText(node.name).width + 26;
+  _collidePass(push, padX, padY) {
+    const n = this.nodes;
+    let moved = false;
+    for (let i = 0; i < n.length; i++) {
+      for (let j = i + 1; j < n.length; j++) {
+        const a = n[i], b = n[j];
+        const ox = (a.w + b.w) / 2 + padX - Math.abs(b.x - a.x);
+        const oy = (a.h + b.h) / 2 + padY - Math.abs(b.y - a.y);
+        if (ox <= 0 || oy <= 0) continue;
+        moved = true;
+        // push apart along the axis of least penetration
+        let fx = 0, fy = 0;
+        if (ox < oy) fx = (b.x > a.x ? 1 : -1) * ox * 0.5 * push;
+        else fy = (b.y > a.y ? 1 : -1) * oy * 0.5 * push;
+        const aPinned = a.depth === 0;
+        const bPinned = b.depth === 0;
+        if (!aPinned) { a.x -= fx * (bPinned ? 2 : 1); a.y -= fy * (bPinned ? 2 : 1); }
+        if (!bPinned) { b.x += fx * (aPinned ? 2 : 1); b.y += fy * (aPinned ? 2 : 1); }
+      }
+    }
+    return moved;
   }
 
+  // ---- thumbnails: one-time etching of the base layer to an offscreen canvas ----
+
+  async _ensureThumb(id) {
+    if (this.thumbs.has(id)) return;
+    this.thumbs.set(id, 'loading');
+    try {
+      const meta = this.zonesMeta[id];
+      const base = (meta.layers || []).find((l) => l[0] === 0) || meta.layers[0];
+      const res = await fetch(`maps/${encodeURIComponent(base[1])}`);
+      if (!res.ok) throw new Error(res.status);
+      const parsed = parseMapText(await res.text());
+      const [minX, minY, maxX, maxY] = meta.bounds;
+      const bw = Math.max(maxX - minX, 1);
+      const bh = Math.max(maxY - minY, 1);
+      const s = Math.min(THUMB_MAX / Math.max(bw, bh), 1);
+      const c = document.createElement('canvas');
+      c.width = Math.max(24, Math.ceil(bw * s));
+      c.height = Math.max(24, Math.ceil(bh * s));
+      const ctx = c.getContext('2d');
+      ctx.setTransform(s, 0, 0, s, -minX * s, -minY * s);
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = 'rgba(236,223,192,0.8)';
+      ctx.lineWidth = 1.1 / s;
+      const path = new Path2D();
+      for (const b of parsed.batches) {
+        const segs = b.segs;
+        for (let i = 0; i < segs.length; i += 6) {
+          path.moveTo(segs[i], segs[i + 1]);
+          path.lineTo(segs[i + 3], segs[i + 4]);
+        }
+      }
+      ctx.stroke(path);
+      // LRU-ish cap on cached etchings
+      if (this.thumbs.size > 130) {
+        for (const k of this.thumbs.keys()) {
+          if (this.thumbs.size <= 100) break;
+          if (this.thumbs.get(k) !== 'loading') this.thumbs.delete(k);
+        }
+      }
+      this.thumbs.set(id, { canvas: c });
+    } catch {
+      this.thumbs.set(id, 'failed');
+    }
+    this.requestRender();
+  }
+
+  // ---- interaction ----
+
   _nodeAt(sx, sy) {
-    const ctx = this.ctx;
     for (let i = this.nodes.length - 1; i >= 0; i--) {
-      const node = this.nodes[i];
-      const [x, y] = this.camera.toScreen(node.x, node.y);
-      const hw = (this._chipW(node, ctx) * 1) / 2 + 2;
-      const hh = node.depth === 0 ? 17 : 13;
+      const n = this.nodes[i];
+      const [x, y] = this.camera.toScreen(n.x, n.y);
+      const hw = (n.w / 2) * this.camera.k + 6;
+      const hh = (n.h / 2) * this.camera.k + 6;
       if (Math.abs(sx - x) < hw && Math.abs(sy - y) < hh) return i;
     }
     return null;
@@ -203,7 +320,7 @@ export class GraphView {
         const hub = this.hubs.has(node.id) ? 'planar hub · ' : '';
         this.tooltip.innerHTML = `Open the map of <b>${node.name}</b><small>${hub}${node.deg} passage${node.deg === 1 ? '' : 's'} · ${node.depth} hop${node.depth === 1 ? '' : 's'} away</small>`;
         this.tooltip.style.left = `${x}px`;
-        this.tooltip.style.top = `${y - 18}px`;
+        this.tooltip.style.top = `${y - (node.h / 2) * this.camera.k - 8}px`;
         this.tooltip.hidden = false;
       } else {
         this.tooltip.hidden = true;
@@ -228,6 +345,8 @@ export class GraphView {
     });
   }
 
+  // ---- render ----
+
   render() {
     const ctx = this.ctx;
     const dpr = window.devicePixelRatio || 1;
@@ -236,7 +355,6 @@ export class GraphView {
     const cam = this.camera;
     if (!w || !h) return;
 
-    // --- night-leather backdrop with faint stars ---
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const bg = ctx.createRadialGradient(w / 2, h / 2, 60, w / 2, h / 2, Math.max(w, h) * 0.8);
     bg.addColorStop(0, '#221a10');
@@ -253,19 +371,6 @@ export class GraphView {
 
     if (!this.nodes.length) return;
 
-    // ring guides
-    const [cx, cy] = cam.toScreen(0, 0);
-    for (let d = 1; d <= this.depth; d++) {
-      ctx.beginPath();
-      ctx.arc(cx, cy, 260 * d * cam.k, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(201,151,59,0.09)';
-      ctx.lineWidth = 1;
-      ctx.setLineDash([2, 6]);
-      ctx.stroke();
-      ctx.setLineDash([]);
-    }
-
-    // --- edges ---
     const hotSet = new Set();
     if (this.hovered !== null) {
       hotSet.add(this.hovered);
@@ -274,71 +379,92 @@ export class GraphView {
         if (j === this.hovered) hotSet.add(i);
       }
     }
+
+    // --- passage strands between actual door positions ---
     for (const [i, j] of this.edges) {
       const a = this.nodes[i];
       const b = this.nodes[j];
-      const [x1, y1] = cam.toScreen(a.x, a.y);
-      const [x2, y2] = cam.toScreen(b.x, b.y);
+      const pa = this._doorPos(a, b.id) || [a.x, a.y];
+      const pb = this._doorPos(b, a.id) || [b.x, b.y];
+      const [x1, y1] = cam.toScreen(pa[0], pa[1]);
+      const [x2, y2] = cam.toScreen(pb[0], pb[1]);
       const hot = this.hovered !== null && (i === this.hovered || j === this.hovered);
-      const mx = (x1 + x2) / 2 + (y2 - y1) * 0.07;
-      const my = (y1 + y2) / 2 - (x2 - x1) * 0.07;
+      const mx = (x1 + x2) / 2 + (y2 - y1) * 0.1;
+      const my = (y1 + y2) / 2 - (x2 - x1) * 0.1;
       ctx.beginPath();
       ctx.moveTo(x1, y1);
       ctx.quadraticCurveTo(mx, my, x2, y2);
-      ctx.strokeStyle = hot ? 'rgba(238,194,114,0.85)' : 'rgba(201,151,59,0.22)';
-      ctx.lineWidth = hot ? 1.8 : 1;
+      ctx.strokeStyle = hot ? 'rgba(238,194,114,0.9)' : 'rgba(201,151,59,0.42)';
+      ctx.lineWidth = hot ? 2 : 1.2;
       ctx.stroke();
+      // small door studs at each end
+      for (const [px, py] of [[x1, y1], [x2, y2]]) {
+        ctx.beginPath();
+        ctx.arc(px, py, hot ? 3 : 2.2, 0, Math.PI * 2);
+        ctx.fillStyle = hot ? '#eec272' : 'rgba(201,151,59,0.55)';
+        ctx.fill();
+      }
     }
 
-    // --- nodes ---
-    for (let i = 0; i < this.nodes.length; i++) {
+    // --- zone cards, farthest rings first so nearer maps sit on top ---
+    const drawOrder = [...this.nodes.keys()].sort(
+      (i, j) => this.nodes[j].depth - this.nodes[i].depth
+    );
+    for (const i of drawOrder) {
       const node = this.nodes[i];
       const [x, y] = cam.toScreen(node.x, node.y);
-      if (x < -160 || y < -40 || x > w + 160 || y > h + 40) continue;
+      const cw = node.w * cam.k;
+      const ch = node.h * cam.k;
+      if (x + cw / 2 < -40 || y + ch / 2 < -40 || x - cw / 2 > w + 40 || y - ch / 2 > h + 40) continue;
       const isCenter = node.depth === 0;
       const isHub = !isCenter && this.hubs.has(node.id);
       const hot = i === this.hovered || hotSet.has(i);
-      const cw = this._chipW(node, ctx);
-      const ch = isCenter ? 32 : 24;
 
+      // card
       ctx.beginPath();
-      ctx.roundRect(x - cw / 2, y - ch / 2, cw, ch, 3);
-      if (isCenter) {
-        const g = ctx.createLinearGradient(x, y - ch / 2, x, y + ch / 2);
-        g.addColorStop(0, '#e2b466');
-        g.addColorStop(1, '#9c6f24');
-        ctx.fillStyle = g;
-      } else if (isHub) {
-        // planar hubs glow otherworldly blue amid the brass
-        ctx.fillStyle = hot ? '#2c3d52' : '#22303f';
-      } else {
-        ctx.fillStyle = hot ? '#33270f' : '#241c11';
-      }
-      ctx.shadowColor = 'rgba(0,0,0,0.55)';
-      ctx.shadowBlur = 8;
-      ctx.shadowOffsetY = 2;
+      ctx.roundRect(x - cw / 2 - 5, y - ch / 2 - 5, cw + 10, ch + 10, 4);
+      ctx.fillStyle = isCenter ? 'rgba(46,34,17,0.92)' : isHub ? 'rgba(26,36,48,0.88)' : 'rgba(26,19,11,0.88)';
+      ctx.shadowColor = 'rgba(0,0,0,0.5)';
+      ctx.shadowBlur = 10;
+      ctx.shadowOffsetY = 3;
       ctx.fill();
       ctx.shadowColor = 'transparent';
       ctx.shadowBlur = 0;
       ctx.shadowOffsetY = 0;
       ctx.strokeStyle = isCenter
-        ? '#f4d79b'
+        ? '#e2b466'
         : isHub
-          ? hot ? '#b4d4f2' : 'rgba(126,166,206,0.65)'
+          ? hot ? '#b4d4f2' : 'rgba(126,166,206,0.6)'
           : hot
             ? 'rgba(238,194,114,0.95)'
-            : 'rgba(201,151,59,0.4)';
-      ctx.lineWidth = isCenter ? 1.6 : 1;
+            : 'rgba(201,151,59,0.32)';
+      ctx.lineWidth = isCenter ? 1.8 : 1;
       ctx.stroke();
 
-      ctx.font = isCenter ? '700 13px "Cinzel", serif' : '500 11.5px "Alegreya Sans", sans-serif';
+      // etched map
+      const thumb = this.thumbs.get(node.id);
+      if (thumb && thumb.canvas) {
+        ctx.globalAlpha = isCenter || hot ? 1 : 0.85;
+        ctx.drawImage(thumb.canvas, x - cw / 2, y - ch / 2, cw, ch);
+        ctx.globalAlpha = 1;
+      }
+
+      // name plate
+      const fs = isCenter ? 13 : 11;
+      ctx.font = isCenter ? `700 ${fs}px "Cinzel", serif` : `500 ${fs}px "Alegreya Sans", sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillStyle = isCenter ? '#241605' : isHub ? (hot ? '#e2eefa' : '#c4d8ea') : hot ? '#f4e2b8' : PARCH;
-      ctx.fillText(node.name, x, y + 0.5);
+      const label = node.name;
+      const tw = ctx.measureText(label).width;
+      const ly = y + ch / 2 + 13;
+      ctx.fillStyle = 'rgba(16,11,6,0.82)';
+      ctx.beginPath();
+      ctx.roundRect(x - tw / 2 - 7, ly - fs / 2 - 4, tw + 14, fs + 8, 3);
+      ctx.fill();
+      ctx.fillStyle = isCenter ? '#eec272' : isHub ? '#c4d8ea' : hot ? '#f4e2b8' : PARCH;
+      ctx.fillText(label, x, ly + 0.5);
     }
 
-    // truncation note
     if (this.truncated > 0) {
       ctx.font = '500 11px "Alegreya Sans", sans-serif';
       ctx.textAlign = 'left';

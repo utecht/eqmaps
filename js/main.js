@@ -14,9 +14,11 @@ const state = {
   view: 'map',
   recents: JSON.parse(localStorage.getItem('eqatlas-recents') || '[]'),
 };
+queueMicrotask(() => { if (window.atlas) window.atlas.state = state; });
 
 const viewer = new MapViewer($('map-canvas'), $('tooltip'));
 const graph = new GraphView($('graph-canvas'), $('tooltip'));
+window.atlas = { viewer, graph, state: null }; // debug handle
 
 // Teleport-hub planes connect to half the world; the world web hides
 // routes through them unless "Portals" is toggled on.
@@ -39,7 +41,7 @@ async function loadIndex() {
       state.adjacency.get(l.t).add(short);
     }
   }
-  graph.setWorld(state.adjacency, state.names, HUBS);
+  graph.setWorld(state.adjacency, state.names, HUBS, state.data.zones);
 }
 
 async function loadZone(short) {
@@ -116,6 +118,9 @@ async function route() {
   state.current = short;
   if (changedZone) addRecent(short);
   renderPanel(short);
+
+  $('layers-sec').hidden = view !== 'map';
+  if (view !== 'map') $('elev-sec').hidden = true;
 
   if (view === 'web') {
     $('zone-sub').textContent = 'the world web';
