@@ -20,9 +20,10 @@ const viewer = new MapViewer($('map-canvas'), $('tooltip'));
 const graph = new GraphView($('graph-canvas'), $('tooltip'));
 window.atlas = { viewer, graph, state: null }; // debug handle
 
-// Teleport-hub planes connect to half the world; the world web hides
-// routes through them unless "Portals" is toggled on.
-const HUBS = new Set(['poknowledge', 'potranquility']);
+// Teleport-hub zones connect to half the world (the planar hubs by book
+// and stone, Timorous Deep by raft); the world web hides routes through
+// them unless "Portals" is toggled on.
+const HUBS = new Set(['poknowledge', 'potranquility', 'timorous']);
 
 // ---------- data loading ----------
 
