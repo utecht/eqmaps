@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Norrath Atlas</title>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" transform="rotate(45 12 12)" fill="%23c9973b"/></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header id="topbar">
+  <div class="brand">
+    <div class="brand-mark"></div>
+    <div class="brand-text">
+      <h1>Norrath Atlas</h1>
+      <span class="tagline">a cartographica for EverQuest Legends</span>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <input id="search" placeholder="Seek a zone&hellip;" autocomplete="off" spellcheck="false">
+    <kbd>/</kbd>
+    <div id="search-results" hidden></div>
+  </div>
+  <nav class="view-toggle">
+    <button id="btn-map" class="active">Zone Map</button>
+    <button id="btn-web">World Web</button>
+  </nav>
+</header>
+
+<main>
+  <section id="stage">
+    <canvas id="map-canvas"></canvas>
+    <canvas id="graph-canvas" hidden></canvas>
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+
+    <div id="zone-plate">
+      <h2 id="zone-title">&nbsp;</h2>
+      <span id="zone-sub"></span>
+    </div>
+
+    <svg id="compass" viewBox="0 0 80 80" width="72" height="72" aria-hidden="true">
+      <circle cx="40" cy="40" r="30" fill="none" stroke="#8a6526" stroke-width="1" opacity="0.7"/>
+      <circle cx="40" cy="40" r="24" fill="none" stroke="#8a6526" stroke-width="0.5" opacity="0.45"/>
+      <polygon points="40,10 44,40 40,46 36,40" fill="#c9973b"/>
+      <polygon points="40,70 44,40 40,34 36,40" fill="#6f4f1a"/>
+      <polygon points="10,40 40,36 46,40 40,44" fill="#6f4f1a"/>
+      <polygon points="70,40 40,36 34,40 40,44" fill="#6f4f1a"/>
+      <text x="40" y="8" text-anchor="middle" font-size="9" fill="#e0c890" font-family="Cinzel, serif" font-weight="700">N</text>
+    </svg>
+
+    <div id="zoom-controls">
+      <button id="z-in" title="Zoom in">+</button>
+      <button id="z-out" title="Zoom out">&minus;</button>
+      <button id="z-fit" title="Fit map">&#8962;</button>
+    </div>
+
+    <div id="web-controls" hidden>
+      <span class="wc-label">reach</span>
+      <button data-d="1">I</button>
+      <button data-d="2" class="active">II</button>
+      <button data-d="3">III</button>
+    </div>
+
+    <div id="hint-bar"></div>
+    <div id="tooltip" hidden></div>
+    <div id="loading" hidden><span>Unfurling the map&hellip;</span></div>
+  </section>
+
+  <aside id="panel">
+    <section class="panel-sec">
+      <h3>Layers</h3>
+      <div id="layer-chips"></div>
+    </section>
+    <section class="panel-sec" id="elev-sec" hidden>
+      <h3>Elevation</h3>
+      <div id="elev">
+        <label>floor<input id="z-min" type="range"></label>
+        <label>ceiling<input id="z-max" type="range"></label>
+        <div class="elev-row"><span id="z-val"></span><button id="z-reset">show all</button></div>
+      </div>
+    </section>
+    <section class="panel-sec">
+      <h3>Passages</h3>
+      <ul id="connections" class="linklist"></ul>
+    </section>
+    <section class="panel-sec">
+      <h3>Recently Charted</h3>
+      <ul id="recents" class="linklist"></ul>
+    </section>
+    <footer id="credits">
+      maps by Brewall &middot; eqmaps.info
+    </footer>
+  </aside>
+</main>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,1952 @@
+{
+  "unresolved": [
+    {
+      "label": "to_A",
+      "count": 12,
+      "zones": [
+        "bothunder",
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_C",
+      "count": 11,
+      "zones": [
+        "bothunder",
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_Courtyard",
+      "count": 10,
+      "zones": [
+        "bothunder"
+      ]
+    },
+    {
+      "label": "to_Lobby",
+      "count": 8,
+      "zones": [
+        "bothunder"
+      ]
+    },
+    {
+      "label": "to_D",
+      "count": 7,
+      "zones": [
+        "bothunder",
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_Korafax,_Home_of_the_Riders",
+      "count": 7,
+      "zones": [
+        "thevoida",
+        "thevoidb",
+        "thevoidc",
+        "thevoidd",
+        "thevoide",
+        "thevoidf",
+        "thevoidg"
+      ]
+    },
+    {
+      "label": "to_1A_(Entrance)",
+      "count": 6,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_B",
+      "count": 6,
+      "zones": [
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_E",
+      "count": 5,
+      "zones": [
+        "bothunder",
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_7",
+      "count": 4,
+      "zones": [
+        "oldkurn"
+      ]
+    },
+    {
+      "label": "to_6",
+      "count": 4,
+      "zones": [
+        "oldkurn"
+      ]
+    },
+    {
+      "label": "to_4",
+      "count": 4,
+      "zones": [
+        "oldkurn"
+      ]
+    },
+    {
+      "label": "to_5",
+      "count": 4,
+      "zones": [
+        "oldkurn"
+      ]
+    },
+    {
+      "label": "to_3",
+      "count": 4,
+      "zones": [
+        "oldkurn"
+      ]
+    },
+    {
+      "label": "to_2",
+      "count": 4,
+      "zones": [
+        "oldkurn"
+      ]
+    },
+    {
+      "label": "to_middle",
+      "count": 4,
+      "zones": [
+        "pillarsalra"
+      ]
+    },
+    {
+      "label": "to_Second_Floor",
+      "count": 4,
+      "zones": [
+        "ssratemple"
+      ]
+    },
+    {
+      "label": "to_Third_Floor",
+      "count": 4,
+      "zones": [
+        "ssratemple",
+        "vexthaltwo"
+      ]
+    },
+    {
+      "label": "to_I",
+      "count": 4,
+      "zones": [
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_J",
+      "count": 4,
+      "zones": [
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_G",
+      "count": 4,
+      "zones": [
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_Lower_Tower",
+      "count": 3,
+      "zones": [
+        "bothunder"
+      ]
+    },
+    {
+      "label": "to_Upper_Tower",
+      "count": 3,
+      "zones": [
+        "bothunder"
+      ]
+    },
+    {
+      "label": "to_Zone_In",
+      "count": 3,
+      "zones": [
+        "charasistwo"
+      ]
+    },
+    {
+      "label": "to_Ry`Gorr_Mines",
+      "count": 3,
+      "zones": [
+        "crystaltwob",
+        "eastwastestwo"
+      ]
+    },
+    {
+      "label": "to_Instance",
+      "count": 3,
+      "zones": [
+        "eastkorlach",
+        "oldbloodfield"
+      ]
+    },
+    {
+      "label": "to_Entrance_Area",
+      "count": 3,
+      "zones": [
+        "felwitheb"
+      ]
+    },
+    {
+      "label": "to_Level_4",
+      "count": 3,
+      "zones": [
+        "frozenshadowtwo"
+      ]
+    },
+    {
+      "label": "to_Level_3",
+      "count": 3,
+      "zones": [
+        "frozenshadowtwo"
+      ]
+    },
+    {
+      "label": "to_Level_5",
+      "count": 3,
+      "zones": [
+        "frozenshadowtwo"
+      ]
+    },
+    {
+      "label": "to_Level_2",
+      "count": 3,
+      "zones": [
+        "frozenshadowtwo"
+      ]
+    },
+    {
+      "label": "to_First_Floor",
+      "count": 3,
+      "zones": [
+        "ssratemple"
+      ]
+    },
+    {
+      "label": "to_F",
+      "count": 3,
+      "zones": [
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_Valley_of_Lunanyn",
+      "count": 2,
+      "zones": [
+        "argath",
+        "sarithcity"
+      ]
+    },
+    {
+      "label": "to_#3",
+      "count": 2,
+      "zones": [
+        "arxmentis"
+      ]
+    },
+    {
+      "label": "to_3E",
+      "count": 2,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_3C",
+      "count": 2,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Rebirth_1",
+      "count": 2,
+      "zones": [
+        "heartoffear",
+        "heartoffearc"
+      ]
+    },
+    {
+      "label": "to_Entry_(click_painting)",
+      "count": 2,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_8",
+      "count": 2,
+      "zones": [
+        "oldkurn"
+      ]
+    },
+    {
+      "label": "to_1",
+      "count": 2,
+      "zones": [
+        "oldkurn"
+      ]
+    },
+    {
+      "label": "to_Entrance_(click_door)",
+      "count": 2,
+      "zones": [
+        "potactics"
+      ]
+    },
+    {
+      "label": "to_2nd_Floor",
+      "count": 2,
+      "zones": [
+        "shipworkshop"
+      ]
+    },
+    {
+      "label": "to_3rd_Floor",
+      "count": 2,
+      "zones": [
+        "shipworkshop"
+      ]
+    },
+    {
+      "label": "to_Basement",
+      "count": 2,
+      "zones": [
+        "shipworkshop",
+        "ssratemple"
+      ]
+    },
+    {
+      "label": "to_West_Entrance_Transit",
+      "count": 2,
+      "zones": [
+        "trialsofsmoke"
+      ]
+    },
+    {
+      "label": "to_Entrance_(click)",
+      "count": 2,
+      "zones": [
+        "vexthal"
+      ]
+    },
+    {
+      "label": "to_E_(click)",
+      "count": 2,
+      "zones": [
+        "vexthal"
+      ]
+    },
+    {
+      "label": "to_Third_Floor_East",
+      "count": 2,
+      "zones": [
+        "vexthaltwo"
+      ]
+    },
+    {
+      "label": "to_H",
+      "count": 2,
+      "zones": [
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_Upper_Floors",
+      "count": 1,
+      "zones": [
+        "argath"
+      ]
+    },
+    {
+      "label": "To_Sand_Castle",
+      "count": 1,
+      "zones": [
+        "argath"
+      ]
+    },
+    {
+      "label": "to_Steamfront_(Blimp)",
+      "count": 1,
+      "zones": [
+        "argath"
+      ]
+    },
+    {
+      "label": "to_Volska`s_Husk_(Teleport_Pad)",
+      "count": 1,
+      "zones": [
+        "arthicrex"
+      ]
+    },
+    {
+      "label": "to_#2",
+      "count": 1,
+      "zones": [
+        "arxmentis"
+      ]
+    },
+    {
+      "label": "to_#4",
+      "count": 1,
+      "zones": [
+        "arxmentis"
+      ]
+    },
+    {
+      "label": "to_Fire_Tower",
+      "count": 1,
+      "zones": [
+        "bothunder"
+      ]
+    },
+    {
+      "label": "to_Air_Tower",
+      "count": 1,
+      "zones": [
+        "bothunder"
+      ]
+    },
+    {
+      "label": "to_Ice_Tower",
+      "count": 1,
+      "zones": [
+        "bothunder"
+      ]
+    },
+    {
+      "label": "to_Earth_Tower",
+      "count": 1,
+      "zones": [
+        "bothunder"
+      ]
+    },
+    {
+      "label": "to_B-1",
+      "count": 1,
+      "zones": [
+        "bothunder"
+      ]
+    },
+    {
+      "label": "to_B-2",
+      "count": 1,
+      "zones": [
+        "bothunder"
+      ]
+    },
+    {
+      "label": "to_D-2",
+      "count": 1,
+      "zones": [
+        "bothunder"
+      ]
+    },
+    {
+      "label": "to_Kernagir,_the_Shinning_City",
+      "count": 1,
+      "zones": [
+        "brellsrest"
+      ]
+    },
+    {
+      "label": "to_Combine_Dredge",
+      "count": 1,
+      "zones": [
+        "brotherisland"
+      ]
+    },
+    {
+      "label": "to_Sathir`s_Tomb",
+      "count": 1,
+      "zones": [
+        "charasistwo"
+      ]
+    },
+    {
+      "label": "to_Zone_in",
+      "count": 1,
+      "zones": [
+        "charasistwo"
+      ]
+    },
+    {
+      "label": "to_Sul_Vius:_Demi-Plane_of_Decay_(Click_Coffin)",
+      "count": 1,
+      "zones": [
+        "codecayb"
+      ]
+    },
+    {
+      "label": "to_First_Floor_(Click_Center)",
+      "count": 1,
+      "zones": [
+        "codecayb"
+      ]
+    },
+    {
+      "label": "to_Basement_(Click_Chair)",
+      "count": 1,
+      "zones": [
+        "codecayb"
+      ]
+    },
+    {
+      "label": "to_Chapterhouse_of_the_Fallen_(click)",
+      "count": 1,
+      "zones": [
+        "commonlands"
+      ]
+    },
+    {
+      "label": "to_Vulska`s_Husk",
+      "count": 1,
+      "zones": [
+        "convorteum"
+      ]
+    },
+    {
+      "label": "to_Sul_Vius:_Demi-Plane_of_Life/Decay",
+      "count": 1,
+      "zones": [
+        "cosul"
+      ]
+    },
+    {
+      "label": "to_Tower_or_Rot",
+      "count": 1,
+      "zones": [
+        "deadhills"
+      ]
+    },
+    {
+      "label": "to_Citadel_of_the_Worldslayer_(Raid_Instance)",
+      "count": 1,
+      "zones": [
+        "discord"
+      ]
+    },
+    {
+      "label": "To_Loping_Planes_(boat)",
+      "count": 1,
+      "zones": [
+        "dragonscale"
+      ]
+    },
+    {
+      "label": "to_Main_Castle",
+      "count": 1,
+      "zones": [
+        "dreadspire"
+      ]
+    },
+    {
+      "label": "to_Southern_Spire",
+      "count": 1,
+      "zones": [
+        "dreadspire"
+      ]
+    },
+    {
+      "label": "to_Runesmoke_Cavern",
+      "count": 1,
+      "zones": [
+        "eastkorlach"
+      ]
+    },
+    {
+      "label": "to_1B",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_4D",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_2E",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_1D",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_4B",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_3D",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_1C",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_3B",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_4A",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_2A",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_3A",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_2B",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_2C",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_2D",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_1E",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_4C",
+      "count": 1,
+      "zones": [
+        "eastsepulcher"
+      ]
+    },
+    {
+      "label": "to_Easern_Wastes",
+      "count": 1,
+      "zones": [
+        "eastwastesshard"
+      ]
+    },
+    {
+      "label": "to_The_Plane_of_Smoke",
+      "count": 1,
+      "zones": [
+        "empyr"
+      ]
+    },
+    {
+      "label": "to_Erudin_Docks",
+      "count": 1,
+      "zones": [
+        "erudnext"
+      ]
+    },
+    {
+      "label": "to_Erudin_City",
+      "count": 1,
+      "zones": [
+        "erudnext"
+      ]
+    },
+    {
+      "label": "to_Erudin_&_South_Qeynos_(Translocator_Jempar)",
+      "count": 1,
+      "zones": [
+        "erudsxing"
+      ]
+    },
+    {
+      "label": "to_Crypt_(click_Skull)",
+      "count": 1,
+      "zones": [
+        "exalted"
+      ]
+    },
+    {
+      "label": "to_Sul_Vius:_Demi-Plane_of_Decay",
+      "count": 1,
+      "zones": [
+        "exaltedb"
+      ]
+    },
+    {
+      "label": "to_Feerott_the_Dream_(click)",
+      "count": 1,
+      "zones": [
+        "feerrott"
+      ]
+    },
+    {
+      "label": "to_Enchanter_Guild",
+      "count": 1,
+      "zones": [
+        "felwitheb"
+      ]
+    },
+    {
+      "label": "to_Magician_Guild",
+      "count": 1,
+      "zones": [
+        "felwitheb"
+      ]
+    },
+    {
+      "label": "to_Wizard_Guild",
+      "count": 1,
+      "zones": [
+        "felwitheb"
+      ]
+    },
+    {
+      "label": "to_Level_6",
+      "count": 1,
+      "zones": [
+        "frozenshadowtwo"
+      ]
+    },
+    {
+      "label": "to_Level_6b",
+      "count": 1,
+      "zones": [
+        "frozenshadowtwo"
+      ]
+    },
+    {
+      "label": "to_Level_7",
+      "count": 1,
+      "zones": [
+        "frozenshadowtwo"
+      ]
+    },
+    {
+      "label": "to_Level_1",
+      "count": 1,
+      "zones": [
+        "frozenshadowtwo"
+      ]
+    },
+    {
+      "label": "to_Level_6a",
+      "count": 1,
+      "zones": [
+        "frozenshadowtwo"
+      ]
+    },
+    {
+      "label": "to_Mirror_Room",
+      "count": 1,
+      "zones": [
+        "frozenshadowtwo"
+      ]
+    },
+    {
+      "label": "to_Pelucid_Grotto_(Teleport_Pad)",
+      "count": 1,
+      "zones": [
+        "fungalforest"
+      ]
+    },
+    {
+      "label": "to_Velketor`s_Labryrith",
+      "count": 1,
+      "zones": [
+        "greatdividetwo"
+      ]
+    },
+    {
+      "label": "to_Neighborhood_Guild_Hall",
+      "count": 1,
+      "zones": [
+        "guildlobby"
+      ]
+    },
+    {
+      "label": "to_Standard_Guild_Hall",
+      "count": 1,
+      "zones": [
+        "guildlobby"
+      ]
+    },
+    {
+      "label": "to_The_Chambers_of_Puissance",
+      "count": 1,
+      "zones": [
+        "harbingerscradle"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Rebirth_2",
+      "count": 1,
+      "zones": [
+        "heartoffear"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Rebirth_3",
+      "count": 1,
+      "zones": [
+        "heartoffear"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear_-_The_Rebirth_4",
+      "count": 1,
+      "zones": [
+        "heartoffear"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Rebirth_5",
+      "count": 1,
+      "zones": [
+        "heartoffear"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Rebirth_6",
+      "count": 1,
+      "zones": [
+        "heartoffear"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear_-_The_Rebirth_7",
+      "count": 1,
+      "zones": [
+        "heartoffear"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Rebirth_8",
+      "count": 1,
+      "zones": [
+        "heartoffear"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Rebirth_9",
+      "count": 1,
+      "zones": [
+        "heartoffear"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Rebirth_10",
+      "count": 1,
+      "zones": [
+        "heartoffear"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Rebirth_11",
+      "count": 1,
+      "zones": [
+        "heartoffear"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Rebirth_12",
+      "count": 1,
+      "zones": [
+        "heartoffear"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Rebirth_13",
+      "count": 1,
+      "zones": [
+        "heartoffear"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Rebirth_14",
+      "count": 1,
+      "zones": [
+        "heartoffear"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_9",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_10",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_11",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_13",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_12",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_16",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_6",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_8",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_7",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Epicenter_2",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Epicenter_1",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_3",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_2",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_1",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_5",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_14",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_4",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Epicenter_3",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_15",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_The_Threshold_17",
+      "count": 1,
+      "zones": [
+        "heartoffearb"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear_-_The_Rebirth_2",
+      "count": 1,
+      "zones": [
+        "heartoffearc"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear_-_The_Rebirth_3",
+      "count": 1,
+      "zones": [
+        "heartoffearc"
+      ]
+    },
+    {
+      "label": "to_Qvic,_the_Hidden_Vault",
+      "count": 1,
+      "zones": [
+        "inktuta"
+      ]
+    },
+    {
+      "label": "to_Sanctum",
+      "count": 1,
+      "zones": [
+        "kattacastrum"
+      ]
+    },
+    {
+      "label": "to_Main_Temple",
+      "count": 1,
+      "zones": [
+        "kattacastrum"
+      ]
+    },
+    {
+      "label": "to_Nektulos_Forrest",
+      "count": 1,
+      "zones": [
+        "lavastorm"
+      ]
+    },
+    {
+      "label": "to_Gyropsire_Beza_(click)",
+      "count": 1,
+      "zones": [
+        "mechanotus"
+      ]
+    },
+    {
+      "label": "to_Gyrospire_Zeta_(click)",
+      "count": 1,
+      "zones": [
+        "mechanotus"
+      ]
+    },
+    {
+      "label": "to_Alice_(click_chair)",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_Black_and_White_Room_(click_book)",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_Chessboard",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_Doors_Room_(click_painting)",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_Entry_(click_torch)",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_Entry_(click_vase)",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_East_Wing_(click_vase)",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_Garden_(click_pot)",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_Theatre_(click_book)",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_Throne_Room",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_Upside-Down_Wing-1_(click_chandolier)",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_Upside-Down_Wing-2",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_Upside-Down_Wing-1_(click_vase)",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_Upside-Down_Wing-1_(click_chair)",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_West_Wing-3_(click_torch)",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_West_Wing-2_(click_painting)",
+      "count": 1,
+      "zones": [
+        "mischiefplane"
+      ]
+    },
+    {
+      "label": "to_Sand_Castle_(click_Wheel)",
+      "count": 1,
+      "zones": [
+        "morellcastle"
+      ]
+    },
+    {
+      "label": "to_Pirate_Ship",
+      "count": 1,
+      "zones": [
+        "morellcastle"
+      ]
+    },
+    {
+      "label": "to_Mainland",
+      "count": 1,
+      "zones": [
+        "morellcastle"
+      ]
+    },
+    {
+      "label": "to_Other_Floor",
+      "count": 1,
+      "zones": [
+        "morellcastle"
+      ]
+    },
+    {
+      "label": "to_Temple_of_Bertoxxulous",
+      "count": 1,
+      "zones": [
+        "oceangreenvillage"
+      ]
+    },
+    {
+      "label": "to_East_Freeport_&_The_Butcherblock_Mountains_(Translocator_Narrik)",
+      "count": 1,
+      "zones": [
+        "oceanoftears"
+      ]
+    },
+    {
+      "label": "to_The_Ruins_of_Old_Paineel",
+      "count": 1,
+      "zones": [
+        "paineel"
+      ]
+    },
+    {
+      "label": "to_Toxullia_Forest",
+      "count": 1,
+      "zones": [
+        "paineel"
+      ]
+    },
+    {
+      "label": "to_The_Ruins_of_Old_Paineel_(fall_down)",
+      "count": 1,
+      "zones": [
+        "paineel"
+      ]
+    },
+    {
+      "label": "to_Xegony_(click_Rainbow)",
+      "count": 1,
+      "zones": [
+        "poair"
+      ]
+    },
+    {
+      "label": "to_Stronghold_of_the_Twelve",
+      "count": 1,
+      "zones": [
+        "poeartha"
+      ]
+    },
+    {
+      "label": "to_Lair_of_Terris_Thule_(click_gate)",
+      "count": 1,
+      "zones": [
+        "ponightmare"
+      ]
+    },
+    {
+      "label": "to_Torment,_the_Plane_of_Pain",
+      "count": 1,
+      "zones": [
+        "potranquility"
+      ]
+    },
+    {
+      "label": "to_Torden,_the_Bastion_of_Thunder",
+      "count": 1,
+      "zones": [
+        "potranquility"
+      ]
+    },
+    {
+      "label": "to_Vergarlson,_The_Earthen_Badlands_(click_Rock)",
+      "count": 1,
+      "zones": [
+        "potranquility"
+      ]
+    },
+    {
+      "label": "to_Plane_of_Fire_(Agent_of_Change)",
+      "count": 1,
+      "zones": [
+        "potranquility"
+      ]
+    },
+    {
+      "label": "to_Mines_of_Narikor_(Click_Statue)",
+      "count": 1,
+      "zones": [
+        "powar"
+      ]
+    },
+    {
+      "label": "to_Mines_of_Narikor_(Click_Front_of_Statue)",
+      "count": 1,
+      "zones": [
+        "powar"
+      ]
+    },
+    {
+      "label": "to_The_Qeynos_Aquaduct_System",
+      "count": 1,
+      "zones": [
+        "qeynos"
+      ]
+    },
+    {
+      "label": "to_Yxxta,_Pulpit_of_Exiles",
+      "count": 1,
+      "zones": [
+        "qvic"
+      ]
+    },
+    {
+      "label": "to_Inktu`Ta,_Lair_of_the_Elite",
+      "count": 1,
+      "zones": [
+        "qvic"
+      ]
+    },
+    {
+      "label": "to_Instances",
+      "count": 1,
+      "zones": [
+        "rage"
+      ]
+    },
+    {
+      "label": "to_Grelleth`s_Palace,_the_Chateau_of_Filth",
+      "count": 1,
+      "zones": [
+        "resplendent"
+      ]
+    },
+    {
+      "label": "to_Base_Level",
+      "count": 1,
+      "zones": [
+        "roost"
+      ]
+    },
+    {
+      "label": "to_Harpy_Grove",
+      "count": 1,
+      "zones": [
+        "roost"
+      ]
+    },
+    {
+      "label": "to_First_Ledge",
+      "count": 1,
+      "zones": [
+        "roost"
+      ]
+    },
+    {
+      "label": "to_Harpy_Mesa",
+      "count": 1,
+      "zones": [
+        "roost"
+      ]
+    },
+    {
+      "label": "to_Harpy_Cliffs",
+      "count": 1,
+      "zones": [
+        "roost"
+      ]
+    },
+    {
+      "label": "to_Royal_Throne",
+      "count": 1,
+      "zones": [
+        "roost"
+      ]
+    },
+    {
+      "label": "to_Shar_Val,_Divided",
+      "count": 1,
+      "zones": [
+        "shadeweavertwo"
+      ]
+    },
+    {
+      "label": "to_Basillica_of_Adumbration",
+      "count": 1,
+      "zones": [
+        "shadowvalley"
+      ]
+    },
+    {
+      "label": "to_Chapterhouse_of_the_Fallen",
+      "count": 1,
+      "zones": [
+        "shardslanding"
+      ]
+    },
+    {
+      "label": "to_The_Plane_of_Shadows",
+      "count": 1,
+      "zones": [
+        "shardslanding"
+      ]
+    },
+    {
+      "label": "to_Grelleth`s_Palace,_Chateau_of_Filth",
+      "count": 1,
+      "zones": [
+        "shardslanding"
+      ]
+    },
+    {
+      "label": "to_Heart_of_Fear:_Threshold_(click_post)",
+      "count": 1,
+      "zones": [
+        "shardslanding"
+      ]
+    },
+    {
+      "label": "to_4th_Floor",
+      "count": 1,
+      "zones": [
+        "shipworkshop"
+      ]
+    },
+    {
+      "label": "to_1st_Floor",
+      "count": 1,
+      "zones": [
+        "shipworkshop"
+      ]
+    },
+    {
+      "label": "to_Skyshrine_Lower_Level",
+      "count": 1,
+      "zones": [
+        "skyshrine"
+      ]
+    },
+    {
+      "label": "to_Quest_Hall",
+      "count": 1,
+      "zones": [
+        "skyshrine"
+      ]
+    },
+    {
+      "label": "to_The_Caverns_of_Exile",
+      "count": 1,
+      "zones": [
+        "soldunga"
+      ]
+    },
+    {
+      "label": "to_Nagafen`s_Lair_(5)_One-Way",
+      "count": 1,
+      "zones": [
+        "soldunga"
+      ]
+    },
+    {
+      "label": "to_The_Caverns_of_Excile",
+      "count": 1,
+      "zones": [
+        "soldungb"
+      ]
+    },
+    {
+      "label": "to_The_Protector_of_Dresolik",
+      "count": 1,
+      "zones": [
+        "solrotower"
+      ]
+    },
+    {
+      "label": "to_Rizlona",
+      "count": 1,
+      "zones": [
+        "solrotower"
+      ]
+    },
+    {
+      "label": "to_Solusek_Ro",
+      "count": 1,
+      "zones": [
+        "solrotower"
+      ]
+    },
+    {
+      "label": "to_Arlyxir",
+      "count": 1,
+      "zones": [
+        "solrotower"
+      ]
+    },
+    {
+      "label": "to_Jiva",
+      "count": 1,
+      "zones": [
+        "solrotower"
+      ]
+    },
+    {
+      "label": "to_Xuzl",
+      "count": 1,
+      "zones": [
+        "solrotower"
+      ]
+    },
+    {
+      "label": "to_Giant_Fort",
+      "count": 1,
+      "zones": [
+        "somnium"
+      ]
+    },
+    {
+      "label": "to_Farm",
+      "count": 1,
+      "zones": [
+        "somnium"
+      ]
+    },
+    {
+      "label": "to_Main_Part",
+      "count": 1,
+      "zones": [
+        "somnium"
+      ]
+    },
+    {
+      "label": "to_Main_part",
+      "count": 1,
+      "zones": [
+        "somnium"
+      ]
+    },
+    {
+      "label": "to_The_Lair_of_the_Splitpaw",
+      "count": 1,
+      "zones": [
+        "southkarana"
+      ]
+    },
+    {
+      "label": "to_Lower_Half_(click)",
+      "count": 1,
+      "zones": [
+        "stillmoonb"
+      ]
+    },
+    {
+      "label": "to_Upper_Half_(click)",
+      "count": 1,
+      "zones": [
+        "stillmoonb"
+      ]
+    },
+    {
+      "label": "to_Plane_of_Smoke",
+      "count": 1,
+      "zones": [
+        "stratos"
+      ]
+    },
+    {
+      "label": "to_The_Barren_Sea_(Long_Boat)",
+      "count": 1,
+      "zones": [
+        "suncrest"
+      ]
+    },
+    {
+      "label": "to_Deathknell_(click_Statue)",
+      "count": 1,
+      "zones": [
+        "theater"
+      ]
+    },
+    {
+      "label": "to_Feerrott,_the_Dream",
+      "count": 1,
+      "zones": [
+        "thulehouse1"
+      ]
+    },
+    {
+      "label": "to_The_Grounds",
+      "count": 1,
+      "zones": [
+        "thulehouse1"
+      ]
+    },
+    {
+      "label": "to_Erudin_Burning",
+      "count": 1,
+      "zones": [
+        "thulehouse1"
+      ]
+    },
+    {
+      "label": "to_Fear_Itself",
+      "count": 1,
+      "zones": [
+        "thulehouse2"
+      ]
+    },
+    {
+      "label": "to_The_Overthere_&_South_Desert_of_Ro_(Translocator_Jorbin)",
+      "count": 1,
+      "zones": [
+        "timorous"
+      ]
+    },
+    {
+      "label": "to_Cablis_West",
+      "count": 1,
+      "zones": [
+        "timorous"
+      ]
+    },
+    {
+      "label": "to_North_Felwithe",
+      "count": 1,
+      "zones": [
+        "timorous"
+      ]
+    },
+    {
+      "label": "to_Butcherblock_&_Firiona_Vie_(Translocator_Deela)",
+      "count": 1,
+      "zones": [
+        "timorous"
+      ]
+    },
+    {
+      "label": "To_Eternity,_and_Beyond!",
+      "count": 1,
+      "zones": [
+        "toe"
+      ]
+    },
+    {
+      "label": "to_The_Ruins_of_Sebilis",
+      "count": 1,
+      "zones": [
+        "trakanon"
+      ]
+    },
+    {
+      "label": "to_Fire_Room_Transit",
+      "count": 1,
+      "zones": [
+        "trialsofsmoke"
+      ]
+    },
+    {
+      "label": "to_Water_Room_Transit",
+      "count": 1,
+      "zones": [
+        "trialsofsmoke"
+      ]
+    },
+    {
+      "label": "to_Water_Room",
+      "count": 1,
+      "zones": [
+        "trialsofsmoke"
+      ]
+    },
+    {
+      "label": "to_West_Entrance",
+      "count": 1,
+      "zones": [
+        "trialsofsmoke"
+      ]
+    },
+    {
+      "label": "to_South_Transit",
+      "count": 1,
+      "zones": [
+        "trialsofsmoke"
+      ]
+    },
+    {
+      "label": "to_South",
+      "count": 1,
+      "zones": [
+        "trialsofsmoke"
+      ]
+    },
+    {
+      "label": "to_Lightning_Room",
+      "count": 1,
+      "zones": [
+        "trialsofsmoke"
+      ]
+    },
+    {
+      "label": "to_Fire_Room",
+      "count": 1,
+      "zones": [
+        "trialsofsmoke"
+      ]
+    },
+    {
+      "label": "to_NW_High",
+      "count": 1,
+      "zones": [
+        "trialsofsmoke"
+      ]
+    },
+    {
+      "label": "to_Earth_Room_(Breaks_Invis)",
+      "count": 1,
+      "zones": [
+        "trialsofsmoke"
+      ]
+    },
+    {
+      "label": "to_South_Entrance",
+      "count": 1,
+      "zones": [
+        "trialsofsmoke"
+      ]
+    },
+    {
+      "label": "to_South_Entrance_Transit",
+      "count": 1,
+      "zones": [
+        "trialsofsmoke"
+      ]
+    },
+    {
+      "label": "to_Qvic,_the_Hidden_Vault_(click_statue)",
+      "count": 1,
+      "zones": [
+        "txevu"
+      ]
+    },
+    {
+      "label": "to_The_Plane_of_Shadow",
+      "count": 1,
+      "zones": [
+        "vexthal"
+      ]
+    },
+    {
+      "label": "to_A_(Click_Stone)",
+      "count": 1,
+      "zones": [
+        "vexthal"
+      ]
+    },
+    {
+      "label": "to_B_(Click_Stone)",
+      "count": 1,
+      "zones": [
+        "vexthal"
+      ]
+    },
+    {
+      "label": "to_C_(click)",
+      "count": 1,
+      "zones": [
+        "vexthal"
+      ]
+    },
+    {
+      "label": "to_Courtyard_North",
+      "count": 1,
+      "zones": [
+        "vexthaltwo"
+      ]
+    },
+    {
+      "label": "to_Courtyard_South",
+      "count": 1,
+      "zones": [
+        "vexthaltwo"
+      ]
+    },
+    {
+      "label": "to_Courtyard_Center",
+      "count": 1,
+      "zones": [
+        "vexthaltwo"
+      ]
+    },
+    {
+      "label": "to_Fourth_Floor",
+      "count": 1,
+      "zones": [
+        "vexthaltwo"
+      ]
+    },
+    {
+      "label": "to_Courtyard_Far_South",
+      "count": 1,
+      "zones": [
+        "vexthaltwo"
+      ]
+    },
+    {
+      "label": "to_Courtyard_Far_North",
+      "count": 1,
+      "zones": [
+        "vexthaltwo"
+      ]
+    },
+    {
+      "label": "to_Anguish,_the_Fallen_Palace",
+      "count": 1,
+      "zones": [
+        "wallofslaughter"
+      ]
+    },
+    {
+      "label": "to_The_Grounds_(click)",
+      "count": 1,
+      "zones": [
+        "well"
+      ]
+    },
+    {
+      "label": "to_the_Maze",
+      "count": 1,
+      "zones": [
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_P_(Top)",
+      "count": 1,
+      "zones": [
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_O",
+      "count": 1,
+      "zones": [
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_N",
+      "count": 1,
+      "zones": [
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_M",
+      "count": 1,
+      "zones": [
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_L",
+      "count": 1,
+      "zones": [
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_K",
+      "count": 1,
+      "zones": [
+        "westsepulcher"
+      ]
+    },
+    {
+      "label": "to_Pillars_of_Alara",
+      "count": 1,
+      "zones": [
+        "windsong"
+      ]
+    },
+    {
+      "label": "to_Qvic,_Grounds_of_Calling",
+      "count": 1,
+      "zones": [
+        "yxtta"
+      ]
+    }
+  ]
+}
